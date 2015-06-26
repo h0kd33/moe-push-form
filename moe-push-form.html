@@ -30,7 +30,7 @@
             <moe-kaomoji> </moe-kaomoji>
             <paper-input class="flex" placeholder="輸入推文"></paper-input>
             <paper-button raised>送出</paper-button>
-            <paper-button on-click="hide">取消</paper-button>
+            <paper-button id="hideBtn" on-click="hide">取消</paper-button>
         </div>
     </template>
 </dom-module>
@@ -88,8 +88,12 @@ Polymer({
     },
 
     hide: function() {
-        this._showing = false;
-        this.playAnimation('exit');
+        var that = this;
+        var callback = function(){         
+            that._showing = false;
+            that.playAnimation('exit');
+        }
+        this.$.hideBtn.debounce('hide',  callback );
     }
 
 });
