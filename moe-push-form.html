@@ -1,0 +1,96 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="../bower_components/neon-animation/neon-animation-runner-behavior.html">
+<link rel="import" href="../bower_components/neon-animation/animations/slide-down-animation.html">
+<link rel="import" href="../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../moe-style/moe-style.html">
+<link rel="import" href="moe-kaomoji.html">
+<dom-module id="moe-push-form">
+    <style>
+    :host {
+        display: none;
+        position: absolute;
+        padding: 16px;
+        background: white;
+        color: black;
+        @apply(--shadow-elevation-2dp);
+    }
+    
+    #pushForm {
+        min-width: 650px;
+        @apply(--layout);
+        @apply(--layout-horizontal);
+        @apply(--layout-center)
+    }
+    </style>
+    <template>
+        <div id="pushForm">
+            <moe-kaomoji> </moe-kaomoji>
+            <paper-input class="flex" placeholder="輸入推文"></paper-input>
+            <paper-button raised>送出</paper-button>
+            <paper-button on-click="hide">取消</paper-button>
+        </div>
+    </template>
+</dom-module>
+<script>
+Polymer({
+
+    is: 'moe-push-form',
+
+    behaviors: [
+        Polymer.NeonAnimationRunnerBehavior
+    ],
+
+    properties: {
+
+        animationConfig: {
+            type: Object,
+            value: function() {
+                return {
+                    'entry': [{
+                        name: 'slide-down-animation',
+                        node: this,
+                        transformOrigin: '0 0'
+                    }],
+                    'exit': [{
+                        name: 'fade-out-animation',
+                        node: this
+                    }]
+                }
+            }
+        },
+        pushTarget: {
+            // String or Number 指定推文的目標文章 NO.
+        },
+        _showing: {
+            type: Boolean,
+            value: false
+        }
+
+    },
+
+    listeners: {
+        'neon-animation-finish': '_onAnimationFinish'
+    },
+
+    _onAnimationFinish: function() {
+        if (this._showing) {} else {
+            this.style.display = '';
+        }
+    },
+
+    show: function() {
+        this.style.display = 'inline-block';
+        this._showing = true;
+        this.playAnimation('entry');
+    },
+
+    hide: function() {
+        this._showing = false;
+        this.playAnimation('exit');
+    }
+
+});
+</script>

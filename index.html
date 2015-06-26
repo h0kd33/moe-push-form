@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="../bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="moe-push-form.html">
+    <link rel="import" href="moe-kaomoji.html">
+</head>
+<style>
+body {
+    background: #FFFFEE;
+}
+</style>
+
+<body>
+    <template is="dom-bind">
+        <moe-kaomoji></moe-kaomoji>
+        <button type="" push-list-id="myTarget" on-click="_onButtonClick">開啟推文FORM</button>
+        <moe-push-form></moe-push-form>
+    </template>
+</body>
+<script>
+var scope = document.querySelector('template[is="dom-bind"]');
+
+scope._onButtonClick = function(event) {
+    var form = document.querySelector('moe-push-form');
+    form.setAttribute('push-target', event.target.getAttribute('push-list-id'));
+    if (form) {
+        form.show();
+    }
+};
+</script>
+
+</html>
