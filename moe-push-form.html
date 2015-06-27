@@ -63,6 +63,7 @@ Polymer({
         },
         pushTarget: {
             // String or Number 指定推文的目標文章 NO.
+            type: String
         },
         _showing: {
             type: Boolean,
@@ -78,22 +79,30 @@ Polymer({
     _onAnimationFinish: function() {
         if (this._showing) {} else {
             this.style.display = '';
+            this.style.left = '';
+            this.style.top = '';          
+            this.pushTarget = '';
         }
     },
 
-    show: function() {
-        this.style.display = 'inline-block';
-        this._showing = true;
-        this.playAnimation('entry');
+    show: function(e) {
+        if (!this._showing || e.target.attributes['push-list-id'].value != this.pushTarget) {            
+            this.pushTarget = e.target.attributes['push-list-id'].value;
+            this.style.display = 'inline-block';
+            this.style.left = e.target.offsetLeft+ "px";
+            this.style.top = e.target.offsetTop + e.target.offsetHeight + "px";
+            this._showing = true;
+            this.playAnimation('entry');
+        }
     },
 
-    hide: function() {
-        var that = this;
-        var callback = function(){         
-            that._showing = false;
-            that.playAnimation('exit');
+    hide: function(e) {
+
+        if (this._showing) {
+            this._showing = false;
+            this.playAnimation('exit');
         }
-        this.$.hideBtn.debounce('hide',  callback );
+
     }
 
 });

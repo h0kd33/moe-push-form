@@ -11,12 +11,19 @@
 body {
     background: #FFFFEE;
 }
+
+button {
+    float: left;
+    clear: both;
+    margin-bottom:  200px;
+}
 </style>
 
 <body>
     <template is="dom-bind">
-        <button type="" push-list-id="myTarget" on-click="_onButtonClick">開啟推文FORM</button>
         <moe-push-form></moe-push-form>
+            <button type="" push-list-id="myTarget" on-click="_onButtonClick">開啟推文FORM</button>
+            <button type="" push-list-id="myTarget2" on-click="_onButtonClick">開啟推文FORM</button>
     </template>
 </body>
 <script>
@@ -24,9 +31,8 @@ var scope = document.querySelector('template[is="dom-bind"]');
 
 scope._onButtonClick = function(event) {
     var form = document.querySelector('moe-push-form');
-    form.setAttribute('push-target', event.target.getAttribute('push-list-id'));
     if (form) {
-        form.show();
+        form.show(event);
     }
 };
 </script>
