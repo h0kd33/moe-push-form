@@ -28,7 +28,7 @@
     <template>
         <div id="pushForm">
             <moe-kaomoji> </moe-kaomoji>
-            <paper-input class="flex" placeholder="輸入推文"></paper-input>
+            <paper-input id="content" class="flex" placeholder="輸入推文"></paper-input>
             <paper-button raised>送出</paper-button>
             <paper-button id="hideBtn" on-click="hide">取消</paper-button>
         </div>
@@ -77,6 +77,7 @@ Polymer({
     },
 
     _onAnimationFinish: function() {
+        // 回到初始狀態
         if (this._showing) {} else {
             this.style.display = '';
             this.style.left = '';
@@ -90,7 +91,7 @@ Polymer({
             this.pushTarget = e.target.attributes['push-list-id'].value;
             this.style.display = 'inline-block';
             this.style.left = e.target.offsetLeft+ "px";
-            this.style.top = e.target.offsetTop + e.target.offsetHeight + "px";
+            this.style.top = e.target.offsetTop + e.target.offsetHeight + "px";   
             this._showing = true;
             this.playAnimation('entry');
         }
